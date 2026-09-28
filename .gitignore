@@ -1,0 +1,45 @@
+# macOS
+.DS_Store
+._*
+
+# Xcode: retain shared schemes and Package.resolved
+DerivedData/
+build/
+xcuserdata/
+*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+*.xcarchive
+*.xcresult
+*.ipa
+*.dSYM/
+*.dSYM.zip
+
+# Swift Package Manager local outputs
+.build/
+.swiftpm/
+
+# Local credentials and signing material
+.env
+.env.*
+!.env.example
+Secrets.xcconfig
+*.local.xcconfig
+*.p12
+*.p8
+*.mobileprovision
+*.provisionprofile
+*.key
+
+# Editor and automation local state
+.idea/
+.vscode/
+.codex/
+.agents/
+*.swp
+*~
+
+# Python asset tooling
+__pycache__/
+*.py[cod]
+.venv/

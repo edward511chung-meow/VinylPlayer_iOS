@@ -1,0 +1,629 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DCA110000000000000000001 /* ScreenCorners in Frameworks */ = {isa = PBXBuildFile; productRef = DCA110000000000000000002 /* ScreenCorners */; };
+		E42FA571300099CB00F5BA3C /* SpotifyiOS in Frameworks */ = {isa = PBXBuildFile; productRef = E42FA570300099CB00F5BA3C /* SpotifyiOS */; };
+		E42FA5823000AB7200F5BA3C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E42FA5813000AB7200F5BA3C /* WidgetKit.framework */; };
+		E42FA5843000AB7200F5BA3C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E42FA5833000AB7200F5BA3C /* SwiftUI.framework */; };
+		E42FA5913000AB7400F5BA3C /* VinylPlayerWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E42FA57F3000AB7200F5BA3C /* VinylPlayerWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E42FA5A53000AD4B00F5BA3C /* MusicKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E42FA5A43000AD4B00F5BA3C /* MusicKit.framework */; };
+		E42FA5A73000AD5A00F5BA3C /* MusicKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E42FA5A43000AD4B00F5BA3C /* MusicKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E42FA58F3000AB7400F5BA3C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E467F47D2FFB577B00801B41 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E42FA57E3000AB7200F5BA3C;
+			remoteInfo = VinylPlayerWidgetsExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E42FA5963000AB7400F5BA3C /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				E42FA5913000AB7400F5BA3C /* VinylPlayerWidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		E42FA57F3000AB7200F5BA3C /* VinylPlayerWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = VinylPlayerWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E42FA5813000AB7200F5BA3C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		E42FA5833000AB7200F5BA3C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		E42FA5A33000ACDF00F5BA3C /* VinylPlayerWidgetsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VinylPlayerWidgetsExtension.entitlements; sourceTree = "<group>"; };
+		E42FA5A43000AD4B00F5BA3C /* MusicKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MusicKit.framework; path = System/Library/Frameworks/MusicKit.framework; sourceTree = SDKROOT; };
+		E467F4852FFB577B00801B41 /* VinylPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VinylPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		E42FA5953000AB7400F5BA3C /* Exceptions for "VinylPlayerWidgets" folder in "VinylPlayerWidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = E42FA57E3000AB7200F5BA3C /* VinylPlayerWidgetsExtension */;
+		};
+		E42FA5A03000AC1400F5BA3C /* Exceptions for "VinylPlayer" folder in "VinylPlayerWidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Localization/LocalizationManager.swift,
+				Model/Constants.swift,
+				Model/LyrimuseKaraoke.swift,
+				Model/NowPlayingAttributes.swift,
+				Model/SharedNowPlayingData.swift,
+				Model/ShareFontStyle.swift,
+				Model/TimedLyrics.swift,
+				Model/TurntableBaseStyle.swift,
+				View/Components/WoodGrainCanvas.swift,
+				View/Turntable/InteractiveTonearmView.swift,
+				View/Turntable/KaraokeLyricText.swift,
+				View/Turntable/RadialLyricsLayer.swift,
+				View/Turntable/RippleLyricsLayer.swift,
+				View/Turntable/TurntableHardware.swift,
+			);
+			target = E42FA57E3000AB7200F5BA3C /* VinylPlayerWidgetsExtension */;
+		};
+		E467F53B2FFB580300801B41 /* Exceptions for "VinylPlayer" folder in "VinylPlayer" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = E467F4842FFB577B00801B41 /* VinylPlayer */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		E42FA5853000AB7200F5BA3C /* VinylPlayerWidgets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E42FA5953000AB7400F5BA3C /* Exceptions for "VinylPlayerWidgets" folder in "VinylPlayerWidgetsExtension" target */,
+			);
+			path = VinylPlayerWidgets;
+			sourceTree = "<group>";
+		};
+		E467F4872FFB577B00801B41 /* VinylPlayer */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E467F53B2FFB580300801B41 /* Exceptions for "VinylPlayer" folder in "VinylPlayer" target */,
+				E42FA5A03000AC1400F5BA3C /* Exceptions for "VinylPlayer" folder in "VinylPlayerWidgetsExtension" target */,
+			);
+			path = VinylPlayer;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E42FA57C3000AB7200F5BA3C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E42FA5843000AB7200F5BA3C /* SwiftUI.framework in Frameworks */,
+				E42FA5823000AB7200F5BA3C /* WidgetKit.framework in Frameworks */,
+				E42FA5A53000AD4B00F5BA3C /* MusicKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E467F4822FFB577B00801B41 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E42FA571300099CB00F5BA3C /* SpotifyiOS in Frameworks */,
+				DCA110000000000000000001 /* ScreenCorners in Frameworks */,
+				E42FA5A73000AD5A00F5BA3C /* MusicKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E42FA5803000AB7200F5BA3C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E42FA5A43000AD4B00F5BA3C /* MusicKit.framework */,
+				E42FA5813000AB7200F5BA3C /* WidgetKit.framework */,
+				E42FA5833000AB7200F5BA3C /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E467F47C2FFB577B00801B41 = {
+			isa = PBXGroup;
+			children = (
+				E42FA5A33000ACDF00F5BA3C /* VinylPlayerWidgetsExtension.entitlements */,
+				E467F4872FFB577B00801B41 /* VinylPlayer */,
+				E42FA5853000AB7200F5BA3C /* VinylPlayerWidgets */,
+				E42FA5803000AB7200F5BA3C /* Frameworks */,
+				E467F4862FFB577B00801B41 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E467F4862FFB577B00801B41 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E467F4852FFB577B00801B41 /* VinylPlayer.app */,
+				E42FA57F3000AB7200F5BA3C /* VinylPlayerWidgetsExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E42FA57E3000AB7200F5BA3C /* VinylPlayerWidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E42FA5923000AB7400F5BA3C /* Build configuration list for PBXNativeTarget "VinylPlayerWidgetsExtension" */;
+			buildPhases = (
+				E42FA57B3000AB7200F5BA3C /* Sources */,
+				E42FA57C3000AB7200F5BA3C /* Frameworks */,
+				E42FA57D3000AB7200F5BA3C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				E42FA5853000AB7200F5BA3C /* VinylPlayerWidgets */,
+			);
+			name = VinylPlayerWidgetsExtension;
+			packageProductDependencies = (
+			);
+			productName = VinylPlayerWidgetsExtension;
+			productReference = E42FA57F3000AB7200F5BA3C /* VinylPlayerWidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		E467F4842FFB577B00801B41 /* VinylPlayer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E467F4902FFB577C00801B41 /* Build configuration list for PBXNativeTarget "VinylPlayer" */;
+			buildPhases = (
+				E467F4812FFB577B00801B41 /* Sources */,
+				E467F4822FFB577B00801B41 /* Frameworks */,
+				E467F4832FFB577B00801B41 /* Resources */,
+				E42FA5963000AB7400F5BA3C /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E42FA5903000AB7400F5BA3C /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				E467F4872FFB577B00801B41 /* VinylPlayer */,
+			);
+			name = VinylPlayer;
+			packageProductDependencies = (
+				E42FA570300099CB00F5BA3C /* SpotifyiOS */,
+				DCA110000000000000000002 /* ScreenCorners */,
+			);
+			productName = VinylPlayer;
+			productReference = E467F4852FFB577B00801B41 /* VinylPlayer.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E467F47D2FFB577B00801B41 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2660;
+				LastUpgradeCheck = 2660;
+				TargetAttributes = {
+					E42FA57E3000AB7200F5BA3C = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					E467F4842FFB577B00801B41 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+				};
+			};
+			buildConfigurationList = E467F4802FFB577B00801B41 /* Build configuration list for PBXProject "VinylPlayer" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E467F47C2FFB577B00801B41;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				E42FA56F300099CB00F5BA3C /* XCRemoteSwiftPackageReference "ios-sdk" */,
+				DCA110000000000000000003 /* XCRemoteSwiftPackageReference "ScreenCorners" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = E467F4862FFB577B00801B41 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E467F4842FFB577B00801B41 /* VinylPlayer */,
+				E42FA57E3000AB7200F5BA3C /* VinylPlayerWidgetsExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E42FA57D3000AB7200F5BA3C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E467F4832FFB577B00801B41 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E42FA57B3000AB7200F5BA3C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E467F4812FFB577B00801B41 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E42FA5903000AB7400F5BA3C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E42FA57E3000AB7200F5BA3C /* VinylPlayerWidgetsExtension */;
+			targetProxy = E42FA58F3000AB7400F5BA3C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		E42FA5933000AB7400F5BA3C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = VinylPlayerWidgetsExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K7542KF9Y5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VinylPlayerWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = VinylPlayerWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Edward-Chung.VinylPlayer.VinylPlayerWidgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E42FA5943000AB7400F5BA3C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = VinylPlayerWidgetsExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K7542KF9Y5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VinylPlayerWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = VinylPlayerWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Edward-Chung.VinylPlayer.VinylPlayerWidgets";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E467F48E2FFB577C00801B41 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = K7542KF9Y5;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		E467F48F2FFB577C00801B41 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = K7542KF9Y5;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E467F4912FFB577C00801B41 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = VinylPlayer/VinylPlayer.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K7542KF9Y5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VinylPlayer/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Vinly Player";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "Vinyl Player uses your music library to browse your collection, search Apple Music, and play the songs you choose.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Edward-Chung.VinylPlayer";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E467F4922FFB577C00801B41 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = VinylPlayer/VinylPlayer.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K7542KF9Y5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VinylPlayer/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Vinly Player";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "Vinyl Player uses your music library to browse your collection, search Apple Music, and play the songs you choose.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Edward-Chung.VinylPlayer";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E42FA5923000AB7400F5BA3C /* Build configuration list for PBXNativeTarget "VinylPlayerWidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E42FA5933000AB7400F5BA3C /* Debug */,
+				E42FA5943000AB7400F5BA3C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E467F4802FFB577B00801B41 /* Build configuration list for PBXProject "VinylPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E467F48E2FFB577C00801B41 /* Debug */,
+				E467F48F2FFB577C00801B41 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E467F4902FFB577C00801B41 /* Build configuration list for PBXNativeTarget "VinylPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E467F4912FFB577C00801B41 /* Debug */,
+				E467F4922FFB577C00801B41 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DCA110000000000000000003 /* XCRemoteSwiftPackageReference "ScreenCorners" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kylebshr/ScreenCorners.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.1;
+			};
+		};
+		E42FA56F300099CB00F5BA3C /* XCRemoteSwiftPackageReference "ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/spotify/ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DCA110000000000000000002 /* ScreenCorners */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DCA110000000000000000003 /* XCRemoteSwiftPackageReference "ScreenCorners" */;
+			productName = ScreenCorners;
+		};
+		E42FA570300099CB00F5BA3C /* SpotifyiOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E42FA56F300099CB00F5BA3C /* XCRemoteSwiftPackageReference "ios-sdk" */;
+			productName = SpotifyiOS;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = E467F47D2FFB577B00801B41 /* Project object */;
+}

@@ -1,0 +1,53 @@
+{
+  "mode": "built-in image_gen",
+  "status": "Final master corrected to user reference: top-left pivot, bottom-left selectors; variants use deterministic authorized recoloring and alpha extraction.",
+  "sources": {
+    "AppIcon_light": "/Users/edward511chung/.codex/generated_images/01a07995-3386-7930-adad-cc9fe2349857/exec-88747fd9-daf4-435e-a226-6d63c0666f58.png",
+    "AppIconDarkWalnut_light": "/Users/edward511chung/.codex/generated_images/01a07995-3386-7930-adad-cc9fe2349857/exec-5b23d8df-6558-4488-81a3-934239364b8a.png",
+    "AppIconWhiteOak_light": "/Users/edward511chung/.codex/generated_images/01a07995-3386-7930-adad-cc9fe2349857/exec-d440424c-a5aa-45d3-9663-3bdc35540967.png",
+    "AppIconEbony_light": "/Users/edward511chung/.codex/generated_images/01a07995-3386-7930-adad-cc9fe2349857/exec-318f2758-7b3e-4275-b255-47074af5b954.png",
+    "AppIconOrange_light": "/Users/edward511chung/.codex/generated_images/01a07995-3386-7930-adad-cc9fe2349857/exec-58bd73c6-b79c-4e5c-8b81-b11f73b345d9.png",
+    "AppIconBlue_light": "/Users/edward511chung/.codex/generated_images/01a07995-3386-7930-adad-cc9fe2349857/exec-b5fdb7c8-8730-487f-a145-775ec330ed50.png",
+    "AppIconClear_light": "/Users/edward511chung/.codex/generated_images/01a07995-3386-7930-adad-cc9fe2349857/exec-0adab49b-ca7c-474d-823b-9bc3aff9ca51.png",
+    "AppIcon_dark": "/Users/edward511chung/.codex/generated_images/01a07995-3386-7930-adad-cc9fe2349857/exec-99f7770f-fdd6-4943-b8de-917af3bae863.png",
+    "AppIcon_tinted": "/Users/edward511chung/.codex/generated_images/01a07995-3386-7930-adad-cc9fe2349857/exec-21bf9264-23f2-42ee-b6b5-03a73acd80c4.png"
+  },
+  "prompts": [
+    {
+      "name": "AppIconDarkWalnut_light",
+      "prompt": "Edit this app icon ONLY by changing materials to dark espresso walnut wood, preserve black vinyl. Preserve EXACT geometry, record crop, plinth shape, two knobs, lettering, new thick tonearm and two-screw headshell, lighting direction, and warm white opaque background. No added objects or text. One square 1024x1024 production icon, no rounded canvas corners."
+    },
+    {
+      "name": "AppIconWhiteOak_light",
+      "prompt": "Edit this app icon ONLY by changing materials to pale ivory white oak wood with natural grain, preserve black vinyl. Preserve EXACT geometry, record crop, plinth shape, two knobs, lettering, new thick tonearm and two-screw headshell, lighting direction, and warm white opaque background. No added objects or text. One square 1024x1024 production icon, no rounded canvas corners."
+    },
+    {
+      "name": "AppIconEbony_light",
+      "prompt": "Edit this app icon ONLY by changing materials to deep charcoal ebony wood with subtle visible grain, preserve black vinyl. Preserve EXACT geometry, record crop, plinth shape, two knobs, lettering, new thick tonearm and two-screw headshell, lighting direction, and warm white opaque background. No added objects or text. One square 1024x1024 production icon, no rounded canvas corners."
+    },
+    {
+      "name": "AppIconOrange_light",
+      "prompt": "Edit this app icon ONLY by changing materials to same warm walnut wood and translucent amber-orange vinyl (keep grooves and opaque gray center label), silver platter visible beneath. Preserve EXACT geometry, record crop, plinth shape, two knobs, lettering, new thick tonearm and two-screw headshell, lighting direction, and warm white opaque background. No added objects or text. One square 1024x1024 production icon, no rounded canvas corners."
+    },
+    {
+      "name": "AppIconBlue_light",
+      "prompt": "Edit this app icon ONLY by changing materials to same warm walnut wood and translucent cobalt-blue vinyl (keep grooves and opaque gray center label), silver platter visible beneath. Preserve EXACT geometry, record crop, plinth shape, two knobs, lettering, new thick tonearm and two-screw headshell, lighting direction, and warm white opaque background. No added objects or text. One square 1024x1024 production icon, no rounded canvas corners."
+    },
+    {
+      "name": "AppIconClear_light",
+      "prompt": "Edit this app icon ONLY by changing materials to same warm walnut wood and translucent frosted clear vinyl, silver platter visible beneath (keep grooves and opaque gray center label). Preserve EXACT geometry, record crop, plinth shape, two knobs, lettering, new thick tonearm and two-screw headshell, lighting direction, and warm white opaque background. No added objects or text. One square 1024x1024 production icon, no rounded canvas corners."
+    },
+    {
+      "name": "AppIcon_dark",
+      "prompt": "Edit this icon into its dark appearance. Preserve EXACT geometry and all hardware, grooves, two knobs, lettering, label and crop. Change warm white background to opaque charcoal near-black, warm walnut wood to darker rich walnut with retained grain, use soft studio highlights so black tonearm remains visible. One square 1024x1024 icon without rounded canvas corners."
+    },
+    {
+      "name": "AppIcon_tinted",
+      "prompt": "Extract this exact updated turntable icon onto a genuinely TRANSPARENT alpha background, removing all white background outside the wooden turntable and retaining a soft translucent contact shadow. Preserve the complete crop, warm walnut, black record, gray label, thick tonearm, two screws and both knobs exactly. No checkerboard drawn into image. One square 1024x1024 PNG with real transparency. Keep colors, this is a transparent foreground asset."
+    }
+  ],
+  "finalMaster": "generated/AppIcon_light.png",
+  "finalMasterSource": "/Users/edward511chung/.codex/generated_images/01a07995-3386-7930-adad-cc9fe2349857/exec-e78bc5b0-4127-4bd2-9723-b3bfcfc1f6a7.png",
+  "correctionPrompt": "Match user screenshot: pivot cropped at upper-left, arm extends diagonally down-right, knobs below disc at lower-left, speed knob partly outside icon. Keep right wood wedge clear.",
+  "postprocessing": "User explicitly authorized programmatic background extraction, palette variants and resizing."
+}

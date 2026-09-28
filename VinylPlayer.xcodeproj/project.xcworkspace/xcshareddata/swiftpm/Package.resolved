@@ -1,0 +1,24 @@
+{
+  "originHash" : "b769a5168d39bdfad9dcf860457553c93a1fa644b28d0fb49741955cb993ca16",
+  "pins" : [
+    {
+      "identity" : "ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/spotify/ios-sdk",
+      "state" : {
+        "revision" : "abb7052d6c6969c79d52ba7fe8b9ddb5f2613f79",
+        "version" : "1.2.5"
+      }
+    },
+    {
+      "identity" : "screencorners",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kylebshr/ScreenCorners.git",
+      "state" : {
+        "revision" : "1b71897c8d9091cad34bf10a47e3810c0c10e1e8",
+        "version" : "1.0.1"
+      }
+    }
+  ],
+  "version" : 3
+}
