@@ -101,8 +101,10 @@ These Debug entry points use isolated in-memory data. Actual playback, backgroun
 - Backups do not include music files, login credentials, or settings. Local folder reading enriches existing track metadata and does not import audio.
 - Lyrics, artwork, and online catalog entries may be missing or become unavailable when upstream sources change.
 
-## Third-Party Code and Licensing
+## Source Acknowledgements
 
-The origin and scope of the Lyrimuse-derived code are documented in [`ThirdParty/Lyrimuse/NOTICE.md`](ThirdParty/Lyrimuse/NOTICE.md). Its full [GPL-3.0 license](ThirdParty/Lyrimuse/LICENSE) is included. Spotify iOS SDK and ScreenCorners are provided under their respective upstream licenses.
+This is a personal portfolio project created to demonstrate iOS development skills. It is not intended for commercial release.
 
-No separate license has been specified for the original portions of this project. Existing third-party licenses continue to apply.
+Parts of the lyrics implementation are adapted from [Lyrimuse](https://github.com/Yudaotor/lyrimuse). Source details and its GPL-3.0 license are preserved in [ThirdParty/Lyrimuse](ThirdParty/Lyrimuse).
+
+The project also uses Spotify iOS SDK and ScreenCorners. Their respective terms and licenses continue to apply.
