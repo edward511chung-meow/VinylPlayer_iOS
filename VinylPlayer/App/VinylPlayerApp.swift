@@ -48,7 +48,11 @@ struct VinylPlayerApp: App {
     @ViewBuilder
     private var appRoot: some View {
         #if DEBUG
-        if ProcessInfo.processInfo.arguments.contains("--metadata-design-preview") {
+        if ProcessInfo.processInfo.arguments.contains("--album-header-preview") {
+            HomeDesignPreview(screen: "header")
+        } else if ProcessInfo.processInfo.arguments.contains("--album-panel-preview") {
+            HomeDesignPreview(screen: "panel")
+        } else if ProcessInfo.processInfo.arguments.contains("--metadata-design-preview") {
             HomeDesignPreview(screen: "metadata")
         } else if ProcessInfo.processInfo.arguments.contains("--search-design-preview") {
             HomeDesignPreview(screen: "search")

@@ -4,6 +4,8 @@ import PhotosUI
 import Combine
 
 struct AlbumDetailView: View {
+    @Environment(\.albumPanelScroll) private var reportPanelScroll
+    @State private var pageOffsets: [UUID: CGFloat] = [:]
     @Query private var collectionAlbums: [Album]
     @AppStorage("albumSortOrder") private var sortOrder: AlbumSortOrder = .recentlyAdded
     @EnvironmentObject private var styleManager: StyleManager
@@ -11,12 +13,14 @@ struct AlbumDetailView: View {
     @State private var browsingAlbums: [Album]
     @State private var needsCollectionOrder: Bool
     @State private var editingAlbumID: UUID?
+    private let usesNativeNavigation: Bool
     private let heroNamespace: Namespace.ID?
     private let heroSourcePrefix: String
     private let onAlbumChange: (Album) -> Void
 
     init(album: Album, albums: [Album] = [], heroNamespace: Namespace.ID? = nil,
-         heroSourcePrefix: String = "grid-", onAlbumChange: @escaping (Album) -> Void = { _ in }) {
+         heroSourcePrefix: String = "grid-", usesNativeNavigation: Bool = false, onAlbumChange: @escaping (Album) -> Void = { _ in }) {
+        self.usesNativeNavigation = usesNativeNavigation
         self.heroNamespace = heroNamespace
         self.heroSourcePrefix = heroSourcePrefix
         self.onAlbumChange = onAlbumChange
@@ -30,7 +34,10 @@ struct AlbumDetailView: View {
             ScrollView(.horizontal) {
                 LazyHStack(spacing: 0) {
                     ForEach(browsingAlbums) { album in
-                        AlbumDetailPage(album: album, onEditingChanged: { editing in
+                        AlbumDetailPage(album: album, usesNativeNavigation: usesNativeNavigation, isCurrentPage: selectedID == album.id, onScroll: { offset in
+                            pageOffsets[album.id] = offset
+                            if selectedID == album.id { reportPanelScroll?(offset) }
+                        }, onEditingChanged: { editing in
                             if editing {
                                 editingAlbumID = album.id
                             } else if editingAlbumID == album.id {
@@ -52,15 +59,23 @@ struct AlbumDetailView: View {
             .scrollDisabled(editingAlbumID != nil)
             // Allow each page's background to reach the top/bottom safe areas.
             .scrollClipDisabled()
+            // The system's scroll edge effect is independent of the toolbar
+            // background, and must share its reveal threshold.
+            .scrollEdgeEffectHidden(usesNativeNavigation && nativeHeaderVisibility == .hidden, for: .top)
         }
         .onChange(of: selectedID) { old, new in
             if old != nil && new != nil && old != new {
+                reportPanelScroll?(new.flatMap { pageOffsets[$0] } ?? 0)
                 HapticManager.shared.impact(styleManager.hapticIntensity)
                 if let album = browsingAlbums.first(where: { $0.id == new }) {
                     onAlbumChange(album)
                 }
             }
         }
+        // Apply navigation appearance to the pager, so off-screen album pages
+        // cannot override the current page's scroll-dependent background.
+        .toolbarBackground(usesNativeNavigation ? nativeHeaderVisibility : .automatic,
+                           for: .navigationBar)
         .modifier(AlbumDetailZoomModifier(namespace: heroNamespace,
                                          sourceID: heroSourcePrefix + (selectedID?.uuidString ?? "")))
         .onAppear {
@@ -73,6 +88,11 @@ struct AlbumDetailView: View {
                 browsingAlbums.insert(initial, at: 0)
             }
         }
+    }
+
+    private var nativeHeaderVisibility: Visibility {
+        let offset = selectedID.flatMap { pageOffsets[$0] } ?? 0
+        return AlbumPanelExpansion.titleOpacity(for: offset) > 0 ? .visible : .hidden
     }
 
 }
@@ -93,6 +113,9 @@ private struct AlbumDetailZoomModifier: ViewModifier {
 private struct AlbumDetailPage: View {
     @State private var playlistTrack: Track?
     @Bindable var album: Album
+    let usesNativeNavigation: Bool
+    let isCurrentPage: Bool
+    let onScroll: (CGFloat) -> Void
     let onEditingChanged: (Bool) -> Void
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject var collectionVM: CollectionViewModel
@@ -100,7 +123,12 @@ private struct AlbumDetailPage: View {
     @EnvironmentObject var musicServiceManager: MusicServiceManager
     @Environment(\.dismiss) private var dismiss
     @Environment(\.closeAlbumFlip) private var closeAlbumFlip
+    @Environment(\.albumPanelTopInset) private var panelTopInset
+    @State private var scrollOffset: CGFloat = 0
+    @State private var scrollPosition = ScrollPosition(edge: .top)
+    @State private var viewportHeight: CGFloat = 0
     @Environment(\.colorScheme) private var systemColorScheme
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var showMetadata = false
     @State private var selectedPhotoItem: PhotosPickerItem?
@@ -216,48 +244,80 @@ private struct AlbumDetailPage: View {
                 }
                 .padding(.horizontal, 24)
                 // Clears the floating close / edit / play row above.
-                .padding(.top, closeAlbumFlip == nil ? 62 : 72)
+                .padding(.top, usesNativeNavigation ? 16 : (closeAlbumFlip == nil ? 64 : 72))
                 .padding(.bottom, 40)
+                // Short albums need enough range to finish the compact title
+                // reveal; flip panels also need room for the growing viewport.
+                .frame(minHeight: viewportHeight + (usesNativeNavigation ? 224 : (closeAlbumFlip == nil ? 0 : 256)), alignment: .top)
             }
-
-
-            VStack {
-                HStack(spacing: 12) {
-                    Button(action: close) {
-                            Image(systemName: "xmark")
-                                .font(.system(size: 15, weight: .bold))
-                                .frame(width: 42, height: 42)
-                                .modifier(AlbumDetailGlassButtonModifier())
-                    }
-                    .accessibilityLabel(Text("Close"))
-
-                    Spacer()
-
-                    Button {
-                        withAnimation(.spring(duration: 0.25)) { isEditing.toggle() }
-                        HapticManager.shared.impact(styleManager.hapticIntensity)
-                    } label: {
-                            Image(systemName: isEditing ? "checkmark" : "pencil")
-                                .font(.system(size: 15, weight: .semibold))
-                                .frame(width: 42, height: 42)
-                                .modifier(AlbumDetailGlassButtonModifier())
-                    }
-
-                    Button {
-                        showSleeveTransition = true
-                        collectionVM.play(album: album)
-                    } label: {
-                            Image(systemName: "play.fill")
-                                .font(.system(size: 15, weight: .semibold))
-                                .frame(width: 42, height: 42)
-                                .modifier(AlbumDetailGlassButtonModifier())
+            .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { viewportHeight = $0 }
+            .scrollPosition($scrollPosition)
+            .task {
+                #if DEBUG
+                let arguments = ProcessInfo.processInfo.arguments
+                if (arguments.contains("--album-panel-preview") || arguments.contains("--home-open-album") || arguments.contains("--album-header-preview")),
+                   let index = arguments.firstIndex(of: "--panel-offset"), index + 1 < arguments.count,
+                   let offset = Double(arguments[index + 1]) {
+                    try? await Task.sleep(for: .seconds(1))
+                    guard !Task.isCancelled else { return }
+                    scrollPosition.scrollTo(y: offset)
+                    if arguments.contains("--panel-return") {
+                        try? await Task.sleep(for: .seconds(2))
+                        guard !Task.isCancelled else { return }
+                        scrollPosition.scrollTo(y: 0)
                     }
                 }
-                .foregroundStyle(.primary)
-                .padding(.horizontal, 18)
-                .padding(.top, closeAlbumFlip == nil ? 8 : 16)
+                #endif
+            }
+            .onScrollGeometryChange(for: CGFloat.self) { geometry in
+                let offset = max(0, geometry.contentOffset.y + geometry.contentInsets.top)
+                #if DEBUG
+                if ProcessInfo.processInfo.arguments.contains("--album-header-preview") {
+                    print("[Header Check] contentOffset=\(geometry.contentOffset.y), topInset=\(geometry.contentInsets.top), offset=\(offset)")
+                }
+                #endif
+                return offset
+            } action: { _, offset in
+                scrollOffset = offset
+                onScroll(offset)
+            }
 
-                Spacer()
+            if !usesNativeNavigation {
+                VStack(spacing: 0) {
+                    HStack(spacing: 12) {
+                        Button(action: close) {
+                                Image(systemName: "xmark")
+                                    .font(.system(size: 15, weight: .bold))
+                                    .frame(width: 44, height: 44)
+                                    .modifier(AlbumDetailGlassButtonModifier())
+                        }
+                        .accessibilityLabel(Text("Close"))
+
+                        compactAlbumTitle
+                        editButton
+                        playButton
+                    }
+                    .foregroundStyle(.primary)
+                    .padding(.horizontal, 16)
+                    .padding(.top, (closeAlbumFlip == nil ? 8 : 16) + panelTopInset)
+                    .padding(.bottom, 8)
+                    .background {
+                        Rectangle().fill(.regularMaterial)
+                            .opacity(AlbumPanelExpansion.titleOpacity(for: scrollOffset))
+                            .allowsHitTesting(false)
+                    }
+
+                    Spacer()
+                }
+            }
+        }
+        .toolbar {
+            if usesNativeNavigation && isCurrentPage {
+                ToolbarItem(placement: .principal) { compactAlbumTitle }
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    editButton
+                    playButton
+                }
             }
         }
         .sheet(isPresented: $showMetadata) { AlbumMetadataView(album: album) }
@@ -293,6 +353,49 @@ private struct AlbumDetailPage: View {
         } message: {
             Text(L("album.delete_confirm", album.title))
         }
+    }
+
+    private var compactAlbumTitle: some View {
+        let progress = AlbumPanelExpansion.titleOpacity(for: scrollOffset)
+        return HStack(spacing: 8) {
+            AlbumCoverView(album: album, size: 32)
+            Text(album.title)
+                .font(.subheadline.weight(.semibold))
+                .lineLimit(1)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .offset(y: reduceMotion ? 0 : 16 * (1 - progress))
+        .frame(minHeight: 32)
+        .clipped()
+        .opacity(progress)
+        .accessibilityHidden(progress < 0.5)
+        .allowsHitTesting(false)
+    }
+
+    private var editButton: some View {
+        Button {
+            withAnimation(.spring(duration: 0.25)) { isEditing.toggle() }
+            HapticManager.shared.impact(styleManager.hapticIntensity)
+        } label: {
+            Image(systemName: isEditing ? "checkmark" : "pencil")
+                .font(.system(size: 15, weight: .semibold))
+                .frame(width: 44, height: 44)
+                .modifier(AlbumDetailGlassButtonModifier(isEnabled: !usesNativeNavigation))
+        }
+        .accessibilityLabel(isEditing ? L("common.done") : L("album.edit"))
+    }
+
+    private var playButton: some View {
+        Button {
+            showSleeveTransition = true
+            collectionVM.play(album: album)
+        } label: {
+            Image(systemName: "play.fill")
+                .font(.system(size: 15, weight: .semibold))
+                .frame(width: 44, height: 44)
+                .modifier(AlbumDetailGlassButtonModifier(isEnabled: !usesNativeNavigation))
+        }
+        .accessibilityLabel(L("library.play"))
     }
 
     private func close() {
@@ -611,8 +714,12 @@ private struct AlbumDetailPage: View {
 }
 
 private struct AlbumDetailGlassButtonModifier: ViewModifier {
+    var isEnabled = true
+
     func body(content: Content) -> some View {
-        if #available(iOS 26.0, *) {
+        if !isEnabled {
+            content
+        } else if #available(iOS 26.0, *) {
             content
                 .glassEffect(.regular.interactive(), in: .circle)
         } else {

@@ -14,9 +14,7 @@ struct HomeView: View {
     @State private var discoverySource: MusicSource = .appleMusic
     @State private var discoveryRefresh = 0
     @AppStorage("home.dismissedDiscoveries") private var dismissedDiscoveries = ""
-    @State private var selectedAlbum: Album?
-    @State private var frames: [String: CGRect] = [:]
-    @State private var sourceFrame = CGRect.zero
+    @State private var albumPath: [UUID] = []
     @State private var viewportWidth: CGFloat = 393
 
     private var featureWidth: CGFloat { min(320, max(216, (viewportWidth - 32) * 0.66)) }
@@ -37,18 +35,17 @@ struct HomeView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $albumPath) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 32) {
                     if !albums.isEmpty {
-                        if collectionVM.currentTrack != nil { continueListening }
                         if !personal.isEmpty { topPicks }
                         if !recent.isEmpty {
-                            shelf(L("home.recent"), albums: Array(recent.prefix(8)), prefix: "recent")
+                            shelf(L("home.recent"), albums: Array(recent.prefix(8)))
                         }
-                        if !recommendations.mix.isEmpty { madeForYou }
-                        if !rediscover.isEmpty { shelf(L("home.rediscover"), albums: rediscover, prefix: "rediscover") }
-                        discoverSection
+                        if !recommendations.mix.isEmpty { madeForYou.padding(.horizontal, 16) }
+                        if !rediscover.isEmpty { shelf(L("home.rediscover"), albums: rediscover) }
+                        discoverSection.padding(.horizontal, 16)
                     } else {
                         ContentUnavailableView {
                             Label(L("home.empty"), systemImage: "opticaldisc")
@@ -57,10 +54,9 @@ struct HomeView: View {
                         } actions: {
                             Button(L("home.open_collection"), action: openCollection)
                                 .buttonStyle(.borderedProminent)
-                        }
+                        }.padding(.horizontal, 16)
                     }
                 }
-                .padding(.horizontal, 16)
                 .padding(.top, 8)
                 .padding(.bottom, collectionVM.currentTrack == nil ? 32 : 144)
             }
@@ -73,44 +69,60 @@ struct HomeView: View {
                 } else if manager.isAuthorized(.spotify), discoverySource != .spotify { discoverySource = .spotify }
                 else if manager.isAuthorized(.appleMusic), discoverySource != .appleMusic { discoverySource = .appleMusic }
             }
-            .environment(\.hiddenAlbumFlipSource, selectedAlbum == nil ? nil : activeSource)
-            .onPreferenceChange(AlbumFlipFrames.self) { frames = $0 }
-            .fullScreenCover(item: $selectedAlbum) { album in
-                AlbumFlipPresentation(album: album, sourceFrame: sourceFrame, dismiss: { selectedAlbum = nil }) {
-                    AlbumDetailView(album: album, albums: albums)
+            .navigationDestination(for: UUID.self) { id in
+                if let album = albums.first(where: { $0.id == id }) {
+                    AlbumDetailView(album: album, albums: albums, usesNativeNavigation: true)
+                        .navigationBarTitleDisplayMode(.inline)
                 }
             }
+            .task {
+                #if DEBUG
+                if ProcessInfo.processInfo.arguments.contains("--home-design-preview"),
+                   ProcessInfo.processInfo.arguments.contains("--home-open-album"),
+                   let album = personal.first {
+                    try? await Task.sleep(for: .seconds(1))
+                    guard !Task.isCancelled else { return }
+                    albumPath.append(album.id)
+                }
+                #endif
+            }
         }
-    }
-
-    @State private var activeSource = ""
-    private func open(_ album: Album, source: String) {
-        guard let frame = frames[source], frame.width > 0 else { return }
-        activeSource = source
-        sourceFrame = frame
-        updateAlbumFlipPresentation { selectedAlbum = album }
     }
 
     private var topPicks: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(L("home.top_picks"))
                 .font(.title2.bold()).foregroundStyle(styleManager.theme.textPrimary)
-            ScrollView(.horizontal) {
-                HStack(spacing: 12) {
-                    ForEach(Array(personal.prefix(6))) { album in
-                        featuredCard(album)
+                .padding(.horizontal, 16)
+            ScrollViewReader { proxy in
+                ScrollView(.horizontal) {
+                    HStack(spacing: 12) {
+                        ForEach(Array(personal.prefix(6))) { album in
+                            featuredCard(album).id(album.id)
+                        }
+                    }.scrollTargetLayout()
+                }
+                .contentMargins(.horizontal, 16, for: .scrollContent)
+                .scrollTargetBehavior(.viewAligned)
+                .scrollIndicators(.hidden)
+                .task {
+                    #if DEBUG
+                    if ProcessInfo.processInfo.arguments.contains("--home-design-preview"),
+                       ProcessInfo.processInfo.arguments.contains("--home-scroll-shelves"),
+                       personal.count > 1 {
+                        try? await Task.sleep(for: .seconds(1))
+                        guard !Task.isCancelled else { return }
+                        proxy.scrollTo(personal[1].id, anchor: .center)
                     }
-                }.scrollTargetLayout()
+                    #endif
+                }
             }
-            .scrollTargetBehavior(.viewAligned)
-            .scrollIndicators(.hidden)
         }
     }
 
     private func featuredCard(_ album: Album) -> some View {
-        let source = "home-featured-\(album.id)"
         let reason = album.tracks.contains(where: \.isFavorite) ? L("home.reason_favorite") : (records.isEmpty ? L("home.collection") : L("home.reason_listening"))
-        return Button { open(album, source: source) } label: {
+        return NavigationLink(value: album.id) {
             ZStack(alignment: .bottomLeading) {
                 AlbumCoverView(album: album, size: featureWidth, height: featureWidth * 1.32,
                                cornerRadius: 0, showsPlaceholderMetadata: false)
@@ -124,11 +136,6 @@ struct HomeView: View {
                                                        .init(color: .black, location: 0.75)],
                                                startPoint: .top, endPoint: .bottom)
                             }
-                    }
-                    .overlay(alignment: .top) {
-                        // The existing flip animation uses a square artwork source.
-                        Color.clear.frame(width: featureWidth, height: featureWidth)
-                            .albumFlipSource(source)
                     }
                 LinearGradient(stops: [.init(color: .clear, location: 0.35),
                                        .init(color: .black.opacity(0.16), location: 0.6),
@@ -145,25 +152,6 @@ struct HomeView: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(album.title + ", " + album.artist + ", " + reason)
-    }
-
-    private var continueListening: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(L("home.continue")).font(.title2.bold())
-            if let album = collectionVM.currentAlbum, let track = collectionVM.currentTrack {
-                HStack(spacing: 16) {
-                    AlbumCoverView(album: album, size: 64)
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(track.title).font(.headline).lineLimit(1)
-                        Text(album.title).font(.caption).foregroundStyle(.secondary).lineLimit(1)
-                        ProgressView(value: collectionVM.playbackProgress)
-                    }
-                    Button { manager.togglePlayback() } label: {
-                        Image(systemName: collectionVM.isPlaying ? "pause.fill" : "play.fill").frame(width: 48, height: 48)
-                    }.accessibilityLabel(L(collectionVM.isPlaying ? "playback.pause" : "library.play"))
-                }.padding(16).background(.thinMaterial, in: .rect(cornerRadius: 16))
-            }
-        }
     }
 
     private var madeForYou: some View {
@@ -215,26 +203,26 @@ struct HomeView: View {
         }
     }
 
-    private func shelf(_ title: String, albums: [Album], prefix: String) -> some View {
+    private func shelf(_ title: String, albums: [Album]) -> some View {
         VStack(alignment: .leading, spacing: 16) {
             VStack(alignment: .leading, spacing: 4) {
                 Text(title).font(.title2.bold()).foregroundStyle(styleManager.theme.textPrimary)
-            }
+            }.padding(.horizontal, 16)
             ScrollView(.horizontal) {
                 HStack(alignment: .top, spacing: 16) {
                     ForEach(albums) { album in
-                        let source = "home-\(prefix)-\(album.id)"
-                        Button { open(album, source: source) } label: {
+                        NavigationLink(value: album.id) {
                             VStack(alignment: .leading, spacing: 8) {
-                                // Anchor only the square cover used by the flip's front face.
-                                AlbumCoverView(album: album, size: 144).albumFlipSource(source)
+                                AlbumCoverView(album: album, size: 144)
                                 Text(album.title).font(.subheadline.weight(.semibold)).lineLimit(1)
                                 Text(album.artist).font(.caption).foregroundStyle(styleManager.theme.textSecondary).lineLimit(1)
                             }.frame(width: 144, alignment: .leading)
                         }.buttonStyle(.plain)
                     }
                 }
-            }.scrollIndicators(.hidden)
+            }
+            .contentMargins(.horizontal, 16, for: .scrollContent)
+            .scrollIndicators(.hidden)
         }
     }
 

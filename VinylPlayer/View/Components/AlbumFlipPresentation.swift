@@ -64,6 +64,7 @@ struct AlbumFlipPresentation<Details: View>: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @State private var progress: CGFloat = 0
     @State private var transitioning = true
+    @State private var scrollExpansion: CGFloat = 0
 
     var body: some View {
         GeometryReader { geometry in
@@ -75,9 +76,15 @@ struct AlbumFlipPresentation<Details: View>: View {
             let expandedSource = CGRect(x: source.midX - expandedWidth / 2,
                                         y: max(16, source.midY - expandedHeight / 2),
                                         width: expandedWidth, height: expandedHeight)
-            let destination = keepsSourceFrame ? expandedSource : CGRect(x: 16, y: topInset,
+            let panel = keepsSourceFrame ? expandedSource : CGRect(x: 16, y: topInset,
                                      width: max(1, geometry.size.width - 32),
                                      height: max(1, geometry.size.height - topInset - 16))
+            let full = CGRect(x: -geometry.safeAreaInsets.leading, y: -geometry.safeAreaInsets.top,
+                              width: geometry.size.width + geometry.safeAreaInsets.leading + geometry.safeAreaInsets.trailing,
+                              height: geometry.size.height + geometry.safeAreaInsets.top + geometry.safeAreaInsets.bottom)
+            let expansion = keepsSourceFrame ? 0 : scrollExpansion
+            let destination = AlbumPanelExpansion.frame(panel: panel, full: full, progress: expansion)
+            let cornerRadius = 24 * (1 - expansion)
             ZStack {
                 Color.black.opacity(0.32 * progress).ignoresSafeArea()
                     .allowsHitTesting(false)
@@ -85,10 +92,15 @@ struct AlbumFlipPresentation<Details: View>: View {
                    sourceFrame.width > 0, sourceFrame.height > 0,
                    sourceFrame.origin.x.isFinite, sourceFrame.origin.y.isFinite {
                 AlbumFlipSurface(progress: progress, source: source, destination: destination,
-                                 reduceMotion: reduceMotion, showsReflection: showsReflection) {
+                                 reduceMotion: reduceMotion, showsReflection: showsReflection, backCornerRadius: cornerRadius) {
                     AlbumCoverView(album: album, size: max(1, source.width))
                 } back: {
                     details().environment(\.closeAlbumFlip, close)
+                        .environment(\.albumPanelTopInset, max(0, -destination.minY))
+                        .environment(\.albumPanelScroll, { offset in
+                            guard !keepsSourceFrame, !transitioning else { return }
+                            scrollExpansion = AlbumPanelExpansion.progress(for: offset)
+                        })
                 }
                 .allowsHitTesting(!transitioning && progress == 1)
                 }
@@ -101,7 +113,7 @@ struct AlbumFlipPresentation<Details: View>: View {
                     let card = destination.offsetBy(dx: origin.x - hitOrigin.x,
                                                     dy: origin.y - hitOrigin.y)
                     Color.clear
-                        .contentShape(AlbumFlipOutsideRegion(card: card), eoFill: true)
+                        .contentShape(AlbumFlipOutsideRegion(card: card, cornerRadius: cornerRadius), eoFill: true)
                         .onTapGesture { close() }
                         .accessibilityHidden(true)
                 }
@@ -143,6 +155,7 @@ struct AlbumFlipSurface<Front: View, Back: View>: View, Animatable {
     let destination: CGRect
     let reduceMotion: Bool
     var showsReflection = false
+    var backCornerRadius: CGFloat = 24
     @ViewBuilder var front: () -> Front
     @ViewBuilder var back: () -> Back
     var animatableData: CGFloat {
@@ -156,7 +169,7 @@ struct AlbumFlipSurface<Front: View, Back: View>: View, Animatable {
         let angle = reduceMotion ? 0 : Double(p) * 180
         AlbumFlipHostingSurface(front: front(), back: back(), sourceSize: source.size,
                                 destinationSize: destination.size, progress: p,
-                                angle: angle, reduceMotion: reduceMotion, showsReflection: showsReflection)
+                                angle: angle, reduceMotion: reduceMotion, showsReflection: showsReflection, backCornerRadius: backCornerRadius)
         .frame(width: width, height: height)
         .shadow(color: .black.opacity(showsReflection ? 0 : 0.16 * p), radius: 24 * p, y: 12 * p)
         .position(x: source.midX + (destination.midX - source.midX) * p,
@@ -175,6 +188,7 @@ private struct AlbumFlipHostingSurface<Front: View, Back: View>: UIViewControlle
     let angle: Double
     let reduceMotion: Bool
     let showsReflection: Bool
+    let backCornerRadius: CGFloat
     @Environment(\.self) private var environment
 
     func makeUIViewController(context: Context) -> AlbumFlipHostingController {
@@ -190,6 +204,7 @@ private struct AlbumFlipHostingSurface<Front: View, Back: View>: UIViewControlle
         controller.angle = angle
         controller.reduceMotion = reduceMotion
         controller.showsReflection = showsReflection
+        controller.backCornerRadius = backCornerRadius
         controller.view.setNeedsLayout()
     }
 }
@@ -203,6 +218,7 @@ private final class AlbumFlipHostingController: UIViewController {
     var angle: Double = 0
     var reduceMotion = false
     var showsReflection = false
+    var backCornerRadius: CGFloat = 24
     private let stage = AlbumReflectionStage()
     private let fade = CAGradientLayer()
     private let frontShadow = CALayer()
@@ -235,6 +251,7 @@ private final class AlbumFlipHostingController: UIViewController {
         super.viewDidLayoutSubviews()
         CATransaction.begin()
         CATransaction.setDisableActions(true)
+        back.view.layer.cornerRadius = backCornerRadius
         let width = max(1, view.bounds.width)
         let height = max(1, view.bounds.height)
         // Perspective makes the nearer edge taller. Reflect below its projected
@@ -279,7 +296,7 @@ private final class AlbumFlipHostingController: UIViewController {
             // plane can cross in front of the card's composited reflection stage.
             // Project its outline into 2D instead, so z-order never changes.
             let outline = UIBezierPath(roundedRect: host.view.bounds,
-                                       cornerRadius: host === front ? sourceSize.width * 0.05 : 24).cgPath
+                                       cornerRadius: host === front ? sourceSize.width * 0.05 : backCornerRadius).cgPath
             shadow.shadowPath = projectedShadowPath(outline, size: size,
                                                      center: host.view.center,
                                                      transform: host.view.layer.transform)
@@ -331,9 +348,10 @@ private final class AlbumReflectionStage: UIView {
 /// Even-odd filling removes the rounded detail card from the full-screen hit area.
 private struct AlbumFlipOutsideRegion: Shape {
     let card: CGRect
+    var cornerRadius: CGFloat = 24
     func path(in rect: CGRect) -> Path {
         var path = Path(rect)
-        path.addRoundedRect(in: card, cornerSize: CGSize(width: 24, height: 24))
+        path.addRoundedRect(in: card, cornerSize: CGSize(width: cornerRadius, height: cornerRadius))
         return path
     }
 }
